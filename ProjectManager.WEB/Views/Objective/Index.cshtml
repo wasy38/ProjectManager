@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ProjectManager.WEB.ViewModels.EntityViewModel.ObjectiveViewModel
+<main>
+    <section>
+        <h1>Objective:</h1>
+        <h2>@Model.Name</h2>
+        <!-- кнопки администрирования -->
+        @if (User.IsInRole("Admin") || (User.IsInRole("TeamLead")))
+        {
+            <section>
+                <a asp-area="" asp-controller="Objective" asp-action="EditObjective" asp-route-Id="@Model.Id"><input class="btn btn-primary" type="submit" value="Edit" /></a>
+                <a asp-area="" asp-controller="Objective" asp-action="Delete" asp-route-Id="@Model.Id"><input class="btn btn-primary" type="submit" value="Delete" /></a>
+            </section>
+        }
+        <div>
+            <br />
+            <span>Author:</span>
+            <span>@Model.Author</span>
+            <br />
+            <span>Project:</span>
+            <span>@Model.Project.Name</span>
+            <br />
+            <span>Status:</span>
+            <span>@Model.Status</span>
+            <br />
+            <span>Comment:</span>
+            <span>@Model.Comment</span>
+            <br />
+            <span>Priority:</span>
+            <span>@Model.Priority</span>
+        </div>
+    </section>
+</main>
+<section>
+    <h2>Employees:</h2>
+    @foreach (ProjectManager.WEB.ViewModels.EntityViewModel.EmployeeViewModel employee in Model.Employees)
+    {
+        <a>
+            <div>
+                <label>@employee.FName</label>
+                <label>@employee.SName</label>
+                <label>@employee.Patronymic</label>
+            </div>
+        </a>
+
+    }
+</section>

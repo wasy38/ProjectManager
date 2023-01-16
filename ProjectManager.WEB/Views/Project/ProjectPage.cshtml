@@ -1,0 +1,80 @@
+﻿@*
+
+For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model ProjectManager.WEB.ViewModels.EntityViewModel.ProjectViewModel
+
+<input type="hidden" id="project-id" value="@Model.Id" />
+<main>
+    <!-- шапка проекта сверху в рамочке -->
+    <section>
+        <h1>Project:</h1>
+        <h2>@Model.Name</h2>
+        @if (User.IsInRole("Admin") || (User.IsInRole("TeamLead")))
+        {
+            <!-- кнопки администрирования -->
+            <section>
+                <a asp-area="" asp-controller="Project" asp-action="EditProject" asp-route-Id="@Model.Id"><input class="btn btn-primary" type="submit" value="Edit" /></a>
+                <a asp-area="" asp-controller="Project" asp-action="Delete" asp-route-Id="@Model.Id"><input class="btn btn-primary" type="submit" value="Delete" /></a>
+            </section>
+        }
+        <div>
+            <span>Customer:</span>
+            <span>@Model.CustomerName</span>
+            <span>/ Performer:</span>
+            <span>@Model.PerformerName</span>
+            <br />
+            <span>Start in:</span>
+            <span>@Model.Start</span>
+            @if (@Model.End != default)
+            {
+                <br />
+                <span>End in:</span>
+                <span>@Model.End</span>
+            }
+            <br />
+            <span>Priority:</span>
+            <span>@Model.Priority</span>
+        </div>
+    </section>
+    <!-- список задач снизу списком -->
+    <section>
+        <h2>Objectives:</h2>
+        @if (User.IsInRole("Admin") || (User.IsInRole("TeamLead")))
+        {
+            <a asp-area="" asp-controller="Objective" asp-action="AddObjective" asp-route-Id="@Model.Id"><input class="btn btn-primary type="submit" value="Add objective" /></a>
+        }
+        <br />
+        @foreach (ProjectManager.WEB.ViewModels.EntityViewModel.ObjectiveViewModel objective in @Model.Objectives)
+        {
+            <a asp-area="" asp-controller="Objective" asp-action="index" asp-route-Id="@objective.Id">
+                <div>
+                    <span>@objective.Name</span>
+                    <span>@objective.Status</span>
+                    <span>@objective.Author</span>
+                </div>
+            </a>
+
+        }
+        <br />
+        <br />
+    </section>
+</main>
+<!-- список сотрудников справа -->
+<section>
+    <h2>Employees:</h2>
+    @foreach (ProjectManager.WEB.ViewModels.EntityViewModel.EmployeeViewModel employee in ViewBag.Employees)
+    {
+        <a>
+            <div>
+                <label>@employee.FName</label>
+                <label>@employee.SName</label>
+                <label>@employee.Patronymic</label>
+            </div>
+        </a>
+
+    }
+</section>

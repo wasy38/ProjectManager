@@ -1,0 +1,78 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model ProjectManager.WEB.ViewModels.EntityViewModel.ProjectViewModel
+@{
+    <input type="hidden" value="@Model.Id" name="Id" />
+    <main>
+        <section>
+            <h1>Project</h1>
+            <div>
+                <form method="post" enctype="multipart/form-data" class="row g-1">
+                    <div class="col-auto">
+                        <input type="hidden" value="@Model.Id" name="Id" />
+                        <span>Name</span>
+                        <br />
+                        <input class="form-control" type="text" value="@Model?.Name" name="Name" />
+                        <br />
+                        <span>Supervisor</span>
+                        <br />
+                        <select class="form-select" name="SupervisorId">
+                            @foreach (ProjectManager.WEB.ViewModels.EntityViewModel.EmployeeViewModel supervisor in ViewBag.Employees)
+                            {
+                                <option value="@supervisor.Id">@supervisor.FName @supervisor.SName</option>
+                            }
+                        </select>
+                        <br />
+                        <span>Employees</span>
+                        <br />
+                        <select class="form-select" multiple name="e">
+                            @foreach (ProjectManager.WEB.ViewModels.EntityViewModel.EmployeeViewModel employee in ViewBag.Employees)
+                            {
+                                <option value="@employee.Id">@employee.FName @employee.SName</option>
+                            }
+                        </select>
+                        <br />
+                        <span>Start in</span>
+                        <div class="row form-group">
+                            <div class="input-group date" data-provide="datepicker">
+                                <input type="text" class="form-control" value="@Model.Start" name="Start">
+                                <span class="input-group-append">
+                                    <span class="input-group-text bg-white d-block">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <br />
+                        <span>End in</span>
+                        <div class="row form-group">
+                            <div class="input-group date" data-provide="datepicker">
+                                <input type="text" class="form-control" value="@Model.End" name="End">
+                                <span class="input-group-append">
+                                    <span class="input-group-text bg-white d-block">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <br />
+                        <span>Customer</span>
+                        <br />
+                        <input class="form-control" type="text" value="@Model?.CustomerName" name="CustomerName" />
+                        <br />
+                        <span>Perfomer</span>
+                        <br />
+                        <input class="form-control" type="text" value="@Model?.PerformerName" name="PerformerName" />
+                        <br />
+                        <span>Priority</span>
+                        <br />
+                        <input class="form-control" type="number" value="@Model?.Priority" name="Priority" />
+                        <br />
+                        <input class="btn btn-primary" type="submit" value="Save" />
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+}

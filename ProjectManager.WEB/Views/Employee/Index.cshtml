@@ -1,0 +1,36 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<main>
+    <section>
+        <form action="" method="post" class="row g-2">
+            <div class="col-auto">
+                <input class="form-control" name="searchString" placeholder="Search..." type="search">
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-primary" asp-action="Index" asp-controller="Employee" type="submit">Поиск</button>
+            </div>
+        </form>
+        <h1>Employees:</h1>
+        @foreach (ProjectManager.WEB.ViewModels.EntityViewModel.EmployeeViewModel employee in ViewBag.Employees)
+        {
+            <a asp-area="" asp-controller="Employee" asp-action="EmployeePage" asp-route-Id="@employee.Id">
+                <option value="@employee.Id">
+                    <span>
+                        @employee.FName
+                        @employee.SName
+                        @employee.Patronymic
+                    </span>
+                </option>
+            </a>
+        }
+    </section>
+    <section>
+        @if (User.IsInRole("TeamLead"))
+        {
+            <a class="btn btn-primary" id="register" asp-area="Identity" asp-page="/Account/Register">Add</a>
+        }
+    </section>
+</main>

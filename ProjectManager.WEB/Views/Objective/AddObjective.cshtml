@@ -1,0 +1,54 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+}
+@model ProjectManager.WEB.ViewModels.EntityViewModel.ObjectiveViewModel
+<main>
+    <section>
+        <h1>Objective</h1>
+        <div>
+            <form method="post" enctype="multipart/form-data" class="row g-1">
+                <div class="col-auto">
+                    <input type="hidden" value="@Model.Id" name="Id" />
+                    <input type="hidden" value="@Model.ProjectId" name="ProjectId" />
+                    <span>Name</span>
+                    <br />
+                    <input class="form-control" type="text" value="@Model?.Name" name="Name" />
+                    <br />
+                    <span>Author</span>
+                    <br />
+                    <input class="form-control" type="text" value="@Model?.Author" name="Author" />
+                    <br />
+                    <span>Status</span>
+                    <br />
+                    <select class="form-select" name="Status">
+                        <option value="@ProjectManager.Domain.Enums.Status.ToDo">ToDo</option>
+                        <option value="@ProjectManager.Domain.Enums.Status.InProgress">InProgress</option>
+                        <option value="@ProjectManager.Domain.Enums.Status.Done">Done</option>
+                    </select>
+                    <br />
+                    <span>Employees</span>
+                    <br />
+                    <select class="form-select" multiple name="e">
+                        @foreach (ProjectManager.WEB.ViewModels.EntityViewModel.EmployeeViewModel employee in ViewBag.Employees)
+                        {
+                            <option value="@employee.Id">@employee.SName @employee.FName</option>
+                        }
+                    </select>
+                    <br />
+                    <span>Comment</span>
+                    <br />
+                    <textarea class="form-control" type="text" value="@Model?.Comment" name="Comment">@Model.Comment</textarea>
+                    <br />
+                    <span>Priority</span>
+                    <br />
+                    <input class="form-control" type="number" value="@Model?.Priority" name="Priority" />
+                    <br />
+                    <input class="btn btn-primary" type="submit" value="Save" />
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
